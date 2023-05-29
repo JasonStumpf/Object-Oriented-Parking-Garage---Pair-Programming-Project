@@ -1,55 +1,53 @@
 class Parking_garage ():
     
     def __init__(self):
-        self.tickets = ['001', '002', '003', '004', '005']
-        self.parkingSpaces = ['101', '102', '103', '104', '105'] 
+        self.tickets = ['001', '002', '003', '004', '005', '006', '007','008','009']
+        self.parkingSpaces = ['101', '102', '103', '104', '105','106','107','108','109'] 
         self.takenTickets = []
         self.takenSpaces = []
         self.currentTicket = {}
 
     def takeTicket (self):
-        if len(self.parkingSpaces) > 0:
+        if len(self.tickets) > 0 and len(self.parkingSpaces) > 0:
             ticket_num1 = self.tickets.pop(0)
             parking_space_num1 = self.parkingSpaces.pop(0)
-            self.takenTickets.insert(0, ticket_num1)
-            self.takenSpaces.insert(0, parking_space_num1)
+            self.takenTickets.append(ticket_num1)
+            self.takenSpaces.append(parking_space_num1)
             self.currentTicket = {
                 'Ticket Number' : ticket_num1,
                 'Parking Space' : parking_space_num1
              }
-            print(f"Your ticket number is {ticket_num1}. Please park in space {parking_space_num1}.")
+            print(f'Your ticket number is {ticket_num1}. Please park in space {parking_space_num1}.')
         else:
-            print("Sorry, the parking lot is full.")
+            print('Sorry, the parking garage is full.')
 
     def payForParking (self):
         if not self.currentTicket:
-            print("The Parking Garage is currently empty.")
-
+            print('The Parking Garage is currently empty.')
         else:     
-            amount1 = input("Please pay for your ticket: ")   
+            amount1 = input('Please pay for your ticket: ')   
             if not amount1:                                     
-                print("Payment not recieved, please make a payment.")
+                print('Payment not recieved, please make a payment.')
             else:
                 self.currentTicket["paid"] = True                        
-                print("Payment approved. You have 15 minutes to leave.")
+                print('Payment approved. You have 15 minutes to leave.')
 
     def leaveGarage (self):
         if not self.currentTicket:
             print("The Parking Garage is currently empty.")
         elif 'paid' in self.currentTicket:
             print("Thank you, have a nice day!")                                             
-            self.currentTicket["paid"] = False
-            ticket_num2 = self.takenTickets.pop()
-            parking_space_num2 = self.takenSpaces.pop()
+            del self.currentTicket['paid']
+            ticket_num2 = self.takenTickets.pop(0)
+            parking_space_num2 = self.takenSpaces.pop(0)
             self.tickets.insert(0, ticket_num2)
             self.parkingSpaces.insert(0, parking_space_num2)
         else:
-            amount2 = input("No payment recieved, you must make a payment before leaving: ")
+            amount2 = input('No payment recieved, you must make a payment before leaving: ')
             if not amount2:
-                print("Payment is required. Please try again.")
+                print('Payment is required. Please try again.')
             else:
-                print("Thank you, have a nice day!")                                             
-                self.currentTicket["paid"] = False
+                print('Thank you, have a nice day!')                                             
                 ticket_num2 = self.takenTickets.pop()
                 parking_space_num2 = self.takenSpaces.pop()
                 self.tickets.insert(0, ticket_num2)
@@ -58,9 +56,9 @@ class Parking_garage ():
 lot = Parking_garage()
 
 def run_parking_garage():
-    print("\nWELCOME TO PARKING GARAGE")
+    print('\nWELCOME TO PARKING GARAGE')
     while True:
-        response = input("\nWhat would you like to do? (Park/Pay/Leave/Quit): ")
+        response = input('\nWhat would you like to do? (Park/Pay/Leave/Quit): ')
         if response.lower() == 'park':
             lot.takeTicket()
             continue
@@ -73,7 +71,7 @@ def run_parking_garage():
         elif response.lower() == 'quit':
             break
         else:
-            print("That is not a valid response.")
+            print('That is not a valid response.')
             continue
 
 run_parking_garage()
